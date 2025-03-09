@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Student Excel File</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <h2>Generate Student Excel File</h2>
+    <button onclick="generateExcel()">Generate Excel</button>
+
+    <script>
+        function generateExcel() {
+            // Student data
+            const students = [
+                {"ID":"S001","FirstName":"John","LastName":"Smith","Gender":"Male","Age":19,"Major":"Computer Science","GPA":3.7,"AdmissionDate":"2023-09-01","Email":"john.smith@university.edu","Phone":"555-123-4567"},
+                {"ID":"S002","FirstName":"Emma","LastName":"Johnson","Gender":"Female","Age":20,"Major":"Biology","GPA":3.9,"AdmissionDate":"2022-09-01","Email":"emma.j@university.edu","Phone":"555-234-5678"},
+                {"ID":"S003","FirstName":"Michael","LastName":"Williams","Gender":"Male","Age":21,"Major":"Physics","GPA":3.5,"AdmissionDate":"2022-09-01","Email":"michael.w@university.edu","Phone":"555-345-6789"},
+                {"ID":"S004","FirstName":"Sophia","LastName":"Brown","Gender":"Female","Age":19,"Major":"Psychology","GPA":3.8,"AdmissionDate":"2023-09-01","Email":"sophia.b@university.edu","Phone":"555-456-7890"},
+                {"ID":"S005","FirstName":"David","LastName":"Jones","Gender":"Male","Age":22,"Major":"Business","GPA":3.2,"AdmissionDate":"2021-09-01","Email":"david.j@university.edu","Phone":"555-567-8901"},
+                {"ID":"S006","FirstName":"Olivia","LastName":"Garcia","Gender":"Female","Age":20,"Major":"Engineering","GPA":4.0,"AdmissionDate":"2022-09-01","Email":"olivia.g@university.edu","Phone":"555-678-9012"},
+                {"ID":"S007","FirstName":"James","LastName":"Miller","Gender":"Male","Age":19,"Major":"Mathematics","GPA":3.6,"AdmissionDate":"2023-09-01","Email":"james.m@university.edu","Phone":"555-789-0123"},
+                {"ID":"S008","FirstName":"Ava","LastName":"Davis","Gender":"Female","Age":21,"Major":"Chemistry","GPA":3.4,"AdmissionDate":"2022-09-01","Email":"ava.d@university.edu","Phone":"555-890-1234"},
+                {"ID":"S009","FirstName":"Ethan","LastName":"Rodriguez","Gender":"Male","Age":20,"Major":"History","GPA":3.3,"AdmissionDate":"2022-09-01","Email":"ethan.r@university.edu","Phone":"555-901-2345"},
+                {"ID":"S010","FirstName":"Isabella","LastName":"Martinez","Gender":"Female","Age":19,"Major":"English","GPA":3.7,"AdmissionDate":"2023-09-01","Email":"isabella.m@university.edu","Phone":"555-012-3456"},
+                {"ID":"S011","FirstName":"Alexander","LastName":"Wilson","Gender":"Male","Age":22,"Major":"Economics","GPA":3.1,"AdmissionDate":"2021-09-01","Email":"alex.w@university.edu","Phone":"555-123-7890"},
+                {"ID":"S012","FirstName":"Mia","LastName":"Anderson","Gender":"Female","Age":20,"Major":"Sociology","GPA":3.8,"AdmissionDate":"2022-09-01","Email":"mia.a@university.edu","Phone":"555-234-8901"},
+                {"ID":"S013","FirstName":"Benjamin","LastName":"Taylor","Gender":"Male","Age":21,"Major":"Computer Science","GPA":3.9,"AdmissionDate":"2022-09-01","Email":"ben.t@university.edu","Phone":"555-345-9012"},
+                {"ID":"S014","FirstName":"Charlotte","LastName":"Thomas","Gender":"Female","Age":19,"Major":"Art","GPA":3.5,"AdmissionDate":"2023-09-01","Email":"charlotte.t@university.edu","Phone":"555-456-0123"},
+                {"ID":"S015","FirstName":"Daniel","LastName":"Jackson","Gender":"Male","Age":20,"Major":"Physics","GPA":3.6,"AdmissionDate":"2022-09-01","Email":"daniel.j@university.edu","Phone":"555-567-1234"},
+                {"ID":"S016","FirstName":"Amelia","LastName":"White","Gender":"Female","Age":22,"Major":"Chemistry","GPA":3.7,"AdmissionDate":"2021-09-01","Email":"amelia.w@university.edu","Phone":"555-678-2345"},
+                {"ID":"S017","FirstName":"Henry","LastName":"Harris","Gender":"Male","Age":19,"Major":"Engineering","GPA":3.4,"AdmissionDate":"2023-09-01","Email":"henry.h@university.edu","Phone":"555-789-3456"},
+                {"ID":"S018","FirstName":"Elizabeth","LastName":"Clark","Gender":"Female","Age":21,"Major":"Business","GPA":3.2,"AdmissionDate":"2022-09-01","Email":"elizabeth.c@university.edu","Phone":"555-890-4567"},
+                {"ID":"S019","FirstName":"William","LastName":"Lewis","Gender":"Male","Age":20,"Major":"Mathematics","GPA":4.0,"AdmissionDate":"2022-09-01","Email":"william.l@university.edu","Phone":"555-901-5678"},
+                {"ID":"S020","FirstName":"Sofia","LastName":"Lee","Gender":"Female","Age":19,"Major":"Psychology","GPA":3.8,"AdmissionDate":"2023-09-01","Email":"sofia.l@university.edu","Phone":"555-012-6789"}
+            ];
+
+            // Create stats data
+            const statsData = [
+                { "Statistic": "Total Students", "Value": students.length },
+                { "Statistic": "Average GPA", "Value": students.reduce((sum, student) => sum + student.GPA, 0) / students.length },
+                { "Statistic": "Male Students", "Value": students.filter(student => student.Gender === "Male").length },
+                { "Statistic": "Female Students", "Value": students.filter(student => student.Gender === "Female").length }
+            ];
+
+            // Create workbook
+            const workbook = XLSX.utils.book_new();
+            
+            // Add students sheet
+            const worksheet = XLSX.utils.json_to_sheet(students);
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
+            
+            // Add stats sheet
+            const statsSheet = XLSX.utils.json_to_sheet(statsData);
+            XLSX.utils.book_append_sheet(workbook, statsSheet, "Statistics");
+            
+            // Generate Excel file
+            XLSX.writeFile(workbook, "student_records.xlsx");
+        }
+    </script>
+</body>
+</html>
